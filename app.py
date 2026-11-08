@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests
 import random
 import string
-import itertools
 import time
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -58,7 +57,7 @@ def check_one(username: str) -> dict:
 
 def check_many(names, workers=12):
     results = [None] * len(names)
-    with ThreadPoolExecutor(max_workers=workers) as ex:
+    with ThreadPoolExecutor(max_workers=max(1, min(workers, 34))) as ex:
         future_map = {ex.submit(check_one, n): i for i, n in enumerate(names)}
         for fut in as_completed(future_map):
             idx = future_map[fut]
@@ -74,19 +73,25 @@ def generate_candidates(length, count, mode="mixed", font_bypass=False):
     alnum = letters + digits
     out = set()
     def valid(name):
-        if not name or len(name) < 3 or len(name) > 20: return False
-        if name[0] == '_' or name[-1] == '_' or name.count('_') > 1: return False
-        return all(c == '_' or c.isalnum() or ord(c) > 127 for c in name)
+        if not name or len(name) < 3 or len(name) > 20:
+            return False
+        if name[0] == "_" or name[-1] == "_" or name.count("_") > 1:
+            return False
+        return all(c == "_" or c.isalnum() or ord(c) > 127 for c in name)
     def add(name, force_len=True):
         name = name.strip()
-        if force_len and length and length >= 3 and len(name) != length: return
-        if valid(name): out.add(name.lower() if name.isascii() else name)
-    while len(out) < count:
+        if force_len and length and length >= 3 and len(name) != length:
+            return
+        if valid(name):
+            out.add(name.lower() if name.isascii() else name)
+    guard = 0
+    while len(out) < count and guard < count * 50:
+        guard += 1
         ln = length if length >= 3 else random.randint(4, 8)
-        if mode == 'clean' or (mode == 'mixed' and random.random() < 0.5):
-            add(''.join(random.choices(alnum, k=ln)))
+        if mode == "clean" or (mode == "mixed" and random.random() < 0.55):
+            add("".join(random.choices(alnum, k=ln)))
         else:
-            w = random.choice(['x','z','q','v','k','w','y']) + ''.join(random.choices(alnum, k=ln-1))
+            w = random.choice(["x", "z", "q", "v", "k", "w", "y"]) + "".join(random.choices(alnum, k=ln - 1))
             add(w)
     return list(out)[:count]
 
@@ -102,20 +107,38 @@ def api_check(username: str = Query(..., min_length=1)):
     return JSONResponse(check_one(username))
 
 @app.get("/api/check/batch")
-def api_check_batch(usernames: str = Query(...), workers: int = Query(12, ge=1, le=25)):
+def api_check_batch(usernames: str = Query(...), workers: int = Query(12, ge=1, le=34)):
     names = [u.strip() for u in usernames.split(",") if u.strip()]
-    if len(names) > 40:
-        raise HTTPException(400, "Max 40 usernames per batch")
-    return JSONResponse({"results": check_many(names, workers=min(workers, 25)), "count": len(names)})
+    if len(names) > 50:
+        raise HTTPException(400, "Max 50 usernames per batch")
+    return JSONResponse({"results": check_many(names, workers=min(workers, 34)), "count": len(names)})
 
 @app.get("/api/candidates")
-def api_candidates(length: int = Query(0, ge=0, le=20), limit: int = Query(100, ge=1, le=2000), mode: str = Query("mixed", pattern="^(mixed|clean|sus)$"), font_bypass: bool = Query(False)):
+def api_candidates(
+    length: int = Query(0, ge=0, le=20),
+    limit: int = Query(100, ge=1, le=5000),
+    mode: str = Query("mixed", pattern="^(mixed|clean|sus)$"),
+    font_bypass: bool = Query(False),
+):
     names = generate_candidates(length if length >= 3 else 0, limit, mode=mode, font_bypass=font_bypass)
     return JSONResponse({"length": length, "mode": mode, "font_bypass": font_bypass, "count": len(names), "candidates": names})
 
 @app.get("/api/scan")
-def api_scan(length: int = Query(6, ge=3, le=12), limit: int = Query(80, ge=1, le=300), workers: int = Query(12, ge=1, le=25), mode: str = Query("mixed", pattern="^(mixed|clean|sus)$"), font_bypass: bool = Query(False)):
+def api_scan(
+    length: int = Query(6, ge=3, le=12),
+    limit: int = Query(100, ge=1, le=5000),
+    workers: int = Query(12, ge=1, le=34),
+    mode: str = Query("mixed", pattern="^(mixed|clean|sus)$"),
+    font_bypass: bool = Query(False),
+):
     candidates = generate_candidates(length, limit, mode=mode, font_bypass=font_bypass)
     results = check_many(candidates, workers=workers)
     available = [r for r in results if r.get("available") is True]
-    return JSONResponse({"length": length, "mode": mode, "checked": len(results), "available_count": len(available), "available": available, "all": results})
+    return JSONResponse({
+        "length": length,
+        "mode": mode,
+        "checked": len(results),
+        "available_count": len(available),
+        "available": available,
+        "all": results,
+    })
