@@ -101,6 +101,9 @@
             <option value="100" selected>100</option>
             <option value="250">250</option>
             <option value="500">500</option>
+            <option value="1000">1000</option>
+            <option value="2000">2000</option>
+            <option value="5000">5000</option>
           </select>
         </div>
         <div>
@@ -110,6 +113,9 @@
             <option value="12" selected>12</option>
             <option value="15">15</option>
             <option value="20">20</option>
+            <option value="24">24</option>
+            <option value="30">30</option>
+            <option value="34">34</option>
           </select>
         </div>
       </div>
@@ -118,7 +124,7 @@
         <label><input type="checkbox" id="fontBypass" /> special font</label>
         <label><input type="checkbox" id="freeOnly" onchange="renderSheet()" /> free only</label>
       </div>
-      <p class="hint">short names are almost always taken — try length 6–8. sheet shows taken + free by default.</p>
+      <p class="hint">short names are almost always taken — try length 6–8. 5000 + 34 workers is heavy on Vercel free tier.</p>
 
       <div class="actions">
         <button class="btn-primary" id="btnScan" onclick="doScan()">scan</button>
@@ -202,7 +208,7 @@ function renderSheet() {
     body.innerHTML = '<tr><td colspan="4" class="empty">no rows match filters</td></tr>';
     return;
   }
-  const view = list.length > 500 ? list.slice(0, 500) : list;
+  const view = list.length > 800 ? list.slice(0, 800) : list;
   body.innerHTML = view.map(r =>
     "<tr><td>" + escapeHtml(r.username) + "</td><td>" + statusLabel(r) +
     "</td><td>" + (r.code != null ? escapeHtml(r.code) : "—") +
@@ -262,7 +268,7 @@ async function doScan() {
       return;
     }
     status.textContent = "checking " + names.length + "…";
-    const chunkSize = 20;
+    const chunkSize = 25;
     let done = 0, available = 0;
     const t0 = performance.now();
     for (let i = 0; i < names.length; i += chunkSize) {
