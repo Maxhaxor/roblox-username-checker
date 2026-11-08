@@ -6,178 +6,51 @@
 <title>roblox · names</title>
 <style>
   :root {
-    --bg: #0a0b0d;
-    --surface: #12141a;
-    --line: #1e222b;
-    --text: #e8eaed;
-    --mute: #6b7280;
-    --accent: #8fbf5a;
-    --free: #3ecf8e;
-    --taken: #e25555;
-    --font: #8b7cf6;
-    --ease: cubic-bezier(.22,1,.36,1);
-    --row: #0e1015;
-    --row2: #12151c;
-    --hover: #1a1e28;
+    --bg: #0a0b0d; --surface: #12141a; --line: #1e222b; --text: #e8eaed;
+    --mute: #6b7280; --accent: #8fbf5a; --free: #3ecf8e; --taken: #e25555;
+    --font: #8b7cf6; --ease: cubic-bezier(.22,1,.36,1);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { color-scheme: dark; }
-  body {
-    font-family: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.45;
-    -webkit-font-smoothing: antialiased;
-  }
+  body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.45; }
   .wrap { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
-  header { margin-bottom: 1.75rem; animation: rise .6s var(--ease) both; }
-  header h1 { font-size: 1.15rem; font-weight: 550; letter-spacing: -0.02em; }
+  header { margin-bottom: 1.75rem; }
+  header h1 { font-size: 1.15rem; font-weight: 550; }
   header p { margin-top: .35rem; color: var(--mute); font-size: .85rem; }
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 1.15rem 1.2rem 1.25rem;
-    margin-bottom: 1rem;
-    animation: rise .7s var(--ease) both;
-  }
-  .panel:nth-of-type(2) { animation-delay: .05s; }
-  label.field {
-    display: block;
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    color: var(--mute);
-    margin-bottom: .4rem;
-  }
-  input[type="text"], input[type="number"], select {
-    width: 100%;
-    background: var(--bg);
-    border: 1px solid var(--line);
-    color: var(--text);
-    border-radius: 10px;
-    padding: .65rem .8rem;
-    font-size: .9rem;
-    outline: none;
-    transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
-  }
-  input:focus, select:focus {
-    border-color: #3a4250;
-    box-shadow: 0 0 0 3px rgba(143,191,90,.12);
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: .75rem;
-    margin-bottom: .85rem;
-  }
-  @media (min-width: 640px) {
-    .grid.four { grid-template-columns: repeat(4, 1fr); }
-    .grid.filters { grid-template-columns: repeat(4, 1fr); }
-  }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 1.15rem 1.2rem 1.25rem; margin-bottom: 1rem; }
+  label.field { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--mute); margin-bottom: .4rem; }
+  input[type="text"], input[type="number"], select { width: 100%; background: var(--bg); border: 1px solid var(--line); color: var(--text); border-radius: 10px; padding: .65rem .8rem; font-size: .9rem; outline: none; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin-bottom: .85rem; }
+  @media (min-width: 640px) { .grid.four { grid-template-columns: repeat(4, 1fr); } }
   .actions { display: flex; gap: .55rem; flex-wrap: wrap; margin-top: .25rem; }
-  button {
-    border: 0;
-    border-radius: 10px;
-    padding: .65rem 1rem;
-    font-size: .88rem;
-    font-weight: 550;
-    cursor: pointer;
-    transition: transform .15s var(--ease), opacity .15s;
-  }
-  button:active { transform: scale(.98); }
+  button { border: 0; border-radius: 10px; padding: .65rem 1rem; font-size: .88rem; font-weight: 550; cursor: pointer; }
   button:disabled { opacity: .45; cursor: not-allowed; }
   .btn-primary { background: var(--accent); color: #0b1008; }
   .btn-stop { background: #2a2f3a; color: var(--text); }
   .hint { margin-top: .55rem; color: var(--mute); font-size: .78rem; }
   .toggles { margin: .55rem 0 .15rem; font-size: .85rem; color: var(--mute); }
-  .toggles label { display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; }
+  .toggles label { display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; margin-right: 1rem; }
   .status { margin-top: .75rem; font-size: .85rem; color: var(--mute); min-height: 1.2em; }
-  .bar {
-    margin-top: .55rem;
-    height: 6px;
-    background: #161920;
-    border-radius: 99px;
-    overflow: hidden;
-  }
-  .bar i {
-    display: block;
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, #6aa84f, #8fbf5a);
-    transition: width .25s var(--ease);
-  }
-  .stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .85rem 1.25rem;
-    margin-top: .7rem;
-    font-size: .82rem;
-    color: var(--mute);
-  }
+  .bar { margin-top: .55rem; height: 6px; background: #161920; border-radius: 99px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #6aa84f, #8fbf5a); transition: width .25s var(--ease); }
+  .stats { display: flex; flex-wrap: wrap; gap: .85rem 1.25rem; margin-top: .7rem; font-size: .82rem; color: var(--mute); }
   .stats b { color: var(--text); font-weight: 600; }
   .stats .ok b { color: var(--free); }
-  .result {
-    margin-top: .75rem;
-    padding: .7rem .85rem;
-    border-radius: 10px;
-    font-size: .9rem;
-  }
+  .result { margin-top: .75rem; padding: .7rem .85rem; border-radius: 10px; font-size: .9rem; }
   .result.free { background: rgba(62,207,142,.08); color: var(--free); border: 1px solid rgba(62,207,142,.2); }
   .result.taken { background: rgba(226,85,85,.08); color: var(--taken); border: 1px solid rgba(226,85,85,.2); }
   .result.err { background: rgba(139,124,246,.08); color: var(--font); border: 1px solid rgba(139,124,246,.2); }
-  .filter-bar { margin-top: 1rem; }
-  .filter-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .65rem; }
-  .pill {
-    font-size: .72rem;
-    padding: .2rem .5rem;
-    border-radius: 99px;
-    background: #1a1e28;
-    color: var(--mute);
-  }
-  .pill.free { background: rgba(62,207,142,.15); color: var(--free); }
-  table.sheet {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: .84rem;
-  }
-  table.sheet th, table.sheet td {
-    text-align: left;
-    padding: .55rem .45rem;
-    border-bottom: 1px solid var(--line);
-  }
-  table.sheet th {
-    color: var(--mute);
-    font-weight: 500;
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    cursor: pointer;
-    user-select: none;
-  }
-  table.sheet th .sort { opacity: .45; margin-left: .25rem; }
-  table.sheet tr:hover td { background: var(--hover); }
+  table.sheet { width: 100%; border-collapse: collapse; font-size: .84rem; }
+  table.sheet th, table.sheet td { text-align: left; padding: .55rem .45rem; border-bottom: 1px solid var(--line); }
+  table.sheet th { color: var(--mute); font-weight: 500; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+  table.sheet tr:hover td { background: #1a1e28; }
   table.sheet .empty { color: var(--mute); text-align: center; padding: 1.5rem; }
-  .tag {
-    display: inline-block;
-    font-size: .72rem;
-    padding: .12rem .4rem;
-    border-radius: 6px;
-  }
+  .tag { display: inline-block; font-size: .72rem; padding: .12rem .4rem; border-radius: 6px; }
   .tag.free { background: rgba(62,207,142,.15); color: var(--free); }
   .tag.taken { background: rgba(226,85,85,.15); color: var(--taken); }
   .tag.inv { background: rgba(139,124,246,.15); color: var(--font); }
-  footer {
-    margin-top: 2rem;
-    color: var(--mute);
-    font-size: .78rem;
-  }
+  footer { margin-top: 2rem; color: var(--mute); font-size: .78rem; }
   footer a { color: var(--mute); }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: none; }
-  }
 </style>
 </head>
 <body>
@@ -203,9 +76,9 @@
           <select id="len">
             <option value="0">any</option>
             <option value="3">3</option>
-            <option value="4" selected>4</option>
+            <option value="4">4</option>
             <option value="5">5</option>
-            <option value="6">6</option>
+            <option value="6" selected>6</option>
             <option value="7">7</option>
             <option value="8">8</option>
             <option value="9">9</option>
@@ -224,31 +97,28 @@
         <div>
           <label class="field" for="limit">count</label>
           <select id="limit">
-            <option value="100">100</option>
+            <option value="50">50</option>
+            <option value="100" selected>100</option>
             <option value="250">250</option>
-            <option value="500" selected>500</option>
-            <option value="1000">1000</option>
-            <option value="2000">2000</option>
-            <option value="5000">5000</option>
+            <option value="500">500</option>
           </select>
         </div>
         <div>
           <label class="field" for="workers">workers</label>
           <select id="workers">
-            <option value="12">12</option>
-            <option value="15" selected>15</option>
-            <option value="16">16</option>
+            <option value="8">8</option>
+            <option value="12" selected>12</option>
+            <option value="15">15</option>
             <option value="20">20</option>
-            <option value="24">24</option>
-            <option value="25">25</option>
           </select>
         </div>
       </div>
 
       <div class="toggles">
         <label><input type="checkbox" id="fontBypass" /> special font</label>
+        <label><input type="checkbox" id="freeOnly" onchange="renderSheet()" /> free only</label>
       </div>
-      <p class="hint">homoglyph lookalikes for naive keyword filters. signup may still block some unicode.</p>
+      <p class="hint">short names are almost always taken — try length 6–8. sheet shows taken + free by default.</p>
 
       <div class="actions">
         <button class="btn-primary" id="btnScan" onclick="doScan()">scan</button>
@@ -264,35 +134,24 @@
         <span>speed <b id="stSpeed">—</b></span>
       </div>
 
-      <div class="filter-bar">
-        <div class="filter-meta">
-          <span class="pill free" id="pillFree">free only</span>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-top:.75rem">
+        <div>
+          <label class="field">min len</label>
+          <input id="fLenMin" type="number" min="0" max="20" placeholder="any" oninput="renderSheet()" />
         </div>
-        <div class="grid filters">
-          <div>
-            <label class="field">min len</label>
-            <input id="fLenMin" type="number" min="0" max="20" placeholder="any" oninput="renderSheet()" />
-          </div>
-          <div>
-            <label class="field">max len</label>
-            <input id="fLenMax" type="number" min="0" max="20" placeholder="any" oninput="renderSheet()" />
-          </div>
+        <div>
+          <label class="field">max len</label>
+          <input id="fLenMax" type="number" min="0" max="20" placeholder="any" oninput="renderSheet()" />
         </div>
       </div>
 
       <div style="overflow:auto; max-height: 520px; margin-top: .75rem;">
         <table class="sheet">
           <thead>
-            <tr>
-              <th onclick="sortBy('username')">name <span class="sort">↕</span></th>
-              <th onclick="sortBy('available')">status <span class="sort">↕</span></th>
-              <th onclick="sortBy('code')">code <span class="sort">↕</span></th>
-              <th>message</th>
-              <th></th>
-            </tr>
+            <tr><th>name</th><th>status</th><th>code</th><th>message</th></tr>
           </thead>
           <tbody id="sheetBody">
-            <tr><td colspan="5" class="empty">scan to fill the sheet</td></tr>
+            <tr><td colspan="4" class="empty">scan to fill the sheet</td></tr>
           </tbody>
         </table>
       </div>
@@ -306,123 +165,107 @@
 <script>
 let rows = [];
 let abortScan = false;
-let sortKey = 'available';
-let sortAsc = false;
 
 function escapeHtml(s) {
-  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&", "<": "<", ">": ">", "\"": """, "'": "&#39;"
+  }[c]));
 }
-
 function setProg(p) {
-  document.getElementById('prog').style.width = Math.max(0, Math.min(100, p)) + '%';
+  document.getElementById("prog").style.width = Math.max(0, Math.min(100, p)) + "%";
 }
-
 function statusLabel(r) {
   if (r.available === true) return '<span class="tag free">available</span>';
-  if (r.available === false && r.error === 'invalid') return '<span class="tag inv">invalid</span>';
+  if (r.available === false && r.error === "invalid") return '<span class="tag inv">invalid</span>';
   if (r.available === false) return '<span class="tag taken">taken</span>';
   return '<span class="tag inv">error</span>';
 }
-
 function renderSheet() {
-  const body = document.getElementById('sheetBody');
-  const minL = parseInt(document.getElementById('fLenMin').value || '0', 10);
-  const maxL = parseInt(document.getElementById('fLenMax').value || '0', 10);
-  let list = rows.filter(r => r.available === true);
-  if (minL) list = list.filter(r => (r.username || '').length >= minL);
-  if (maxL) list = list.filter(r => (r.username || '').length <= maxL);
-  list = [...list].sort((a, b) => {
-    let av = a[sortKey], bv = b[sortKey];
-    if (sortKey === 'username') { av = (av || '').toLowerCase(); bv = (bv || '').toLowerCase(); }
-    if (av === bv) return 0;
-    if (av == null) return 1;
-    if (bv == null) return -1;
-    return (av > bv ? 1 : -1) * (sortAsc ? 1 : -1);
-  });
-  document.getElementById('stShown').textContent = String(list.length);
-  if (!list.length) {
-    body.innerHTML = '<tr><td colspan="5" class="empty">scan to fill the sheet</td></tr>';
+  const body = document.getElementById("sheetBody");
+  const freeOnly = document.getElementById("freeOnly").checked;
+  const minL = parseInt(document.getElementById("fLenMin").value || "0", 10);
+  const maxL = parseInt(document.getElementById("fLenMax").value || "0", 10);
+  let list = rows.slice();
+  if (freeOnly) list = list.filter(r => r.available === true);
+  if (minL) list = list.filter(r => (r.username || "").length >= minL);
+  if (maxL) list = list.filter(r => (r.username || "").length <= maxL);
+  document.getElementById("stShown").textContent = String(list.length);
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="4" class="empty">scan to fill the sheet</td></tr>';
     return;
   }
-  body.innerHTML = list.map(r => `
-    <tr>
-      <td>${escapeHtml(r.username)}</td>
-      <td>${statusLabel(r)}</td>
-      <td>${r.code != null ? escapeHtml(r.code) : '—'}</td>
-      <td>${escapeHtml(r.message || r.error || '')}</td>
-      <td></td>
-    </tr>
-  `).join('');
+  if (!list.length) {
+    body.innerHTML = '<tr><td colspan="4" class="empty">no rows match filters</td></tr>';
+    return;
+  }
+  const view = list.length > 500 ? list.slice(0, 500) : list;
+  body.innerHTML = view.map(r =>
+    "<tr><td>" + escapeHtml(r.username) + "</td><td>" + statusLabel(r) +
+    "</td><td>" + (r.code != null ? escapeHtml(r.code) : "—") +
+    "</td><td>" + escapeHtml(r.message || r.error || "") + "</td></tr>"
+  ).join("");
 }
-
-function sortBy(k) {
-  if (sortKey === k) sortAsc = !sortAsc;
-  else { sortKey = k; sortAsc = true; }
-  renderSheet();
-}
-
 async function doCheck() {
-  const u = document.getElementById('user').value.trim();
-  const out = document.getElementById('checkResult');
-  if (!u) { out.innerHTML = ''; return; }
+  const u = document.getElementById("user").value.trim();
+  const out = document.getElementById("checkResult");
+  if (!u) { out.innerHTML = ""; return; }
   out.innerHTML = '<div class="status">checking…</div>';
   try {
-    const r = await fetch('/api/check?username=' + encodeURIComponent(u));
+    const r = await fetch("/api/check?username=" + encodeURIComponent(u));
     const d = await r.json();
-    if (d.available === true) {
-      out.innerHTML = `<div class="result free">available · ${escapeHtml(d.username)}${d.bypass ? ' · font' : ''}</div>`;
-    } else if (d.available === false) {
-      out.innerHTML = `<div class="result taken">taken · ${escapeHtml(d.username)}${d.message ? ' · ' + escapeHtml(d.message) : ''}</div>`;
-    } else {
-      out.innerHTML = `<div class="result err">error · ${escapeHtml(d.error || 'unknown')}</div>`;
-    }
+    if (d.available === true)
+      out.innerHTML = '<div class="result free">available · ' + escapeHtml(d.username) + (d.bypass ? " · font" : "") + "</div>";
+    else if (d.available === false)
+      out.innerHTML = '<div class="result taken">taken · ' + escapeHtml(d.username) + (d.message ? " · " + escapeHtml(d.message) : "") + "</div>";
+    else
+      out.innerHTML = '<div class="result err">error · ' + escapeHtml(d.error || "unknown") + "</div>";
   } catch (e) {
-    out.innerHTML = `<div class="result err">fail · ${escapeHtml(e.message || e)}</div>`;
+    out.innerHTML = '<div class="result err">fail · ' + escapeHtml(e.message || e) + "</div>";
   }
 }
-
-document.getElementById('user').addEventListener('keydown', e => { if (e.key === 'Enter') doCheck(); });
-
+document.getElementById("user").addEventListener("keydown", e => { if (e.key === "Enter") doCheck(); });
 function stopScan() {
   abortScan = true;
-  document.getElementById('scanStatus').textContent = 'stopping…';
+  document.getElementById("scanStatus").textContent = "stopping…";
 }
-
 async function doScan() {
-  const length = parseInt(document.getElementById('len').value, 10) || 0;
-  const mode = document.getElementById('mode').value;
-  const limit = parseInt(document.getElementById('limit').value, 10) || 500;
-  const workers = parseInt(document.getElementById('workers').value, 10) || 15;
-  const fontBypass = document.getElementById('fontBypass').checked;
-  const btn = document.getElementById('btnScan');
-  const stopBtn = document.getElementById('btnStop');
-  const status = document.getElementById('scanStatus');
+  const length = parseInt(document.getElementById("len").value, 10) || 0;
+  const mode = document.getElementById("mode").value;
+  const limit = parseInt(document.getElementById("limit").value, 10) || 100;
+  const workers = parseInt(document.getElementById("workers").value, 10) || 12;
+  const fontBypass = document.getElementById("fontBypass").checked;
+  const btn = document.getElementById("btnScan");
+  const stopBtn = document.getElementById("btnStop");
+  const status = document.getElementById("scanStatus");
   abortScan = false;
   btn.disabled = true; stopBtn.disabled = false;
   rows = [];
   setProg(0);
-  document.getElementById('stChecked').textContent = '0';
-  document.getElementById('stFree').textContent = '0';
-  document.getElementById('stShown').textContent = '0';
-  document.getElementById('stSpeed').textContent = '—';
-  status.textContent = 'generating…';
+  document.getElementById("stChecked").textContent = "0";
+  document.getElementById("stFree").textContent = "0";
+  document.getElementById("stShown").textContent = "0";
+  document.getElementById("stSpeed").textContent = "—";
+  status.textContent = "generating…";
+  renderSheet();
   try {
-    const cr = await fetch(`/api/candidates?length=${length}&limit=${limit}&mode=${mode}&font_bypass=${fontBypass}`);
+    const cr = await fetch("/api/candidates?length=" + length + "&limit=" + limit + "&mode=" + mode + "&font_bypass=" + fontBypass);
+    if (!cr.ok) throw new Error("candidates " + cr.status);
     const cd = await cr.json();
     const names = cd.candidates || [];
     if (!names.length) {
-      status.textContent = 'no candidates';
+      status.textContent = "no candidates";
       btn.disabled = false; stopBtn.disabled = true;
       return;
     }
-    status.textContent = `checking ${names.length}…`;
-    const chunkSize = 40;
+    status.textContent = "checking " + names.length + "…";
+    const chunkSize = 20;
     let done = 0, available = 0;
     const t0 = performance.now();
     for (let i = 0; i < names.length; i += chunkSize) {
       if (abortScan) break;
       const chunk = names.slice(i, i + chunkSize);
-      const br = await fetch('/api/check/batch?workers=' + encodeURIComponent(workers) + '&usernames=' + encodeURIComponent(chunk.join(',')));
+      const br = await fetch("/api/check/batch?workers=" + encodeURIComponent(workers) + "&usernames=" + encodeURIComponent(chunk.join(",")));
+      if (!br.ok) { status.textContent = "batch failed · " + br.status; break; }
       const bd = await br.json();
       const results = bd.results || [];
       for (const x of results) {
@@ -431,16 +274,16 @@ async function doScan() {
       }
       done += results.length;
       setProg(Math.round((done / names.length) * 100));
-      document.getElementById('stChecked').textContent = String(done);
-      document.getElementById('stFree').textContent = String(available);
+      document.getElementById("stChecked").textContent = String(done);
+      document.getElementById("stFree").textContent = String(available);
       const elapsed = (performance.now() - t0) / 1000;
-      document.getElementById('stSpeed').textContent = (elapsed > 0 ? (done / elapsed).toFixed(1) : '—') + '/s';
+      document.getElementById("stSpeed").textContent = (elapsed > 0 ? (done / elapsed).toFixed(1) : "—") + "/s";
       renderSheet();
     }
     const elapsed = ((performance.now() - t0) / 1000).toFixed(1);
-    status.textContent = (abortScan ? 'stopped' : 'done') + ` · ${done} checked · ${available} free · ${elapsed}s`;
-  } catch {
-    status.textContent = 'scan failed';
+    status.textContent = (abortScan ? "stopped" : "done") + " · " + done + " checked · " + available + " free · " + elapsed + "s";
+  } catch (e) {
+    status.textContent = "scan failed · " + (e.message || e);
   }
   btn.disabled = false; stopBtn.disabled = true;
 }
