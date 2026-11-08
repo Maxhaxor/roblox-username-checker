@@ -167,9 +167,13 @@ let rows = [];
 let abortScan = false;
 
 function escapeHtml(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&", "<": "<", ">": ">", "\"": """, "'": "&#39;"
-  }[c]));
+  return String(s ?? "").replace(/[&<>"']/g, function(c) {
+    if (c === "&") return "&" + "amp;";
+    if (c === "<") return "&" + "lt;";
+    if (c === ">") return "&" + "gt;";
+    if (c === '"') return "&" + "quot;";
+    return "&#39;";
+  });
 }
 function setProg(p) {
   document.getElementById("prog").style.width = Math.max(0, Math.min(100, p)) + "%";
